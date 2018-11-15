@@ -11,7 +11,7 @@ import timeit
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
-img_path = "/media/rey/Data/edge_detect/archive/1023-175009/300000_quartz_evalset3_TEM/2MMC0_3,7_SRAM_C_03out-fused.png"
+img_path = ""
 
 m = 512
 n = 512
