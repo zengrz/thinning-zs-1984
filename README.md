@@ -21,6 +21,31 @@ The script repeats Zhang-Suen iterations until no more pixels are removed, or un
 
 Use `run-zs-thinning.sh` when running from this repository. It activates the CUDA library paths installed by `tensorflow[and-cuda]` before starting Python.
 
+## Trainable neural edge thinning
+
+`zs_thinning_neural.py` contains a small residual convolutional edge predictor followed by the differentiable Zhang-Suen thinning block from `zs_thinning_trainable.py`. Train it on generated thick-edge/thin-edge pairs:
+
+```bash
+.venv/bin/python zs_thinning_neural.py --train \
+  --checkpoint-dir checkpoints/edge_thinner \
+  --train-steps 1000 \
+  --batch-size 8 \
+  --image-size 128 \
+  --iterations 5
+```
+
+Run the trained network on a thresholded edge image:
+
+```bash
+.venv/bin/python zs_thinning_neural.py input.png \
+  --checkpoint-dir checkpoints/edge_thinner \
+  -o neural_thinned.png \
+  --threshold 180 \
+  --iterations 5
+```
+
+The neural path writes both the thinned result and an `_edge_probability.png` image showing the CNN output before differentiable thinning.
+
 ## Dependencies
 
 ```bash
